@@ -12,7 +12,7 @@ type KafkaHandler struct {
 }
 
 //handler that sends message to producer's input channel
-func (h *KafkaHandler) handle(w http.ResponseWriter, r *http.Request) {
+func (h *KafkaHandler) Handle(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	topic := params["topic"]
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))

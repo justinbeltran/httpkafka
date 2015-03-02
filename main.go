@@ -11,7 +11,7 @@ func main() {
 	sender := NewMsgSender([]string{"localhost:9092"})
 	handler := &KafkaHandler{sender}
 	router := mux.NewRouter()
-	router.HandleFunc("/topics/{topic:[\\w]+}/messages", handler.handle).Methods("POST")
+	router.HandleFunc("/topics/{topic:[\\w]+}/messages", handler.Handle).Methods("POST")
 	http.Handle("/", router)
 	log.Println("Listening on 3000...")
 	http.ListenAndServe(":3000", nil)
