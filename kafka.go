@@ -1,27 +1,30 @@
 package main
 
 import (
-	"fmt"
 	"github.com/Shopify/sarama"
+	"log"
 )
 
 type MsgSender struct {
+	Client   *sarama.Client
 	Producer *sarama.Producer
 }
 
 //Returns a new Sender
 func NewMsgSender(brokers []string) *MsgSender {
-	client, err := sarama.NewClient("client_id", brokers, sarama.NewClientConfig())
+	client, err := sarama.NewClient("httpkafka", brokers, sarama.NewClientConfig())
 	if err != nil {
 		panic(err)
 	} else {
-		fmt.Println("Connected to Kafka Brokers...")
+		log.Println("Connected to Kafka Brokers...")
 	}
 	producer, err := sarama.NewProducer(client, nil)
 	if err != nil {
 		panic(err)
+	} else {
+		log.Println("Created Kafka Producer")
 	}
-	s := &MsgSender{producer}
+	s := &MsgSender{client, producer}
 	return s
 }
 
