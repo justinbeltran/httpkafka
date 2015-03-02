@@ -24,4 +24,5 @@ func (s *Sender) Handler(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 	s.Producer.Input() <- &sarama.ProducerMessage{Topic: topic, Key: nil, Value: sarama.StringEncoder(body)}
+	w.WriteHeader(http.StatusNoContent)
 }
